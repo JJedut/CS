@@ -1,0 +1,17 @@
+{
+  "name": "cs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm --prefix frontend run dev\" \"npm run dev --prefix backend run dev\","
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

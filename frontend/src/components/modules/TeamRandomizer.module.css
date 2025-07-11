@@ -1,0 +1,125 @@
+.container {
+    text-align: center;
+    padding: 1rem;
+    background-color: #333333;
+    border: 2px solid #404040;
+    border-radius: 0.5rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.reelWrapper {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.reelWindow {
+    width: 960px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    border: 2px solid #404040;
+    background-color: #242424;
+}
+
+.reel {
+    display: flex;
+    transition: transform 0.3s ease;
+    padding: 0.5rem 0;
+}
+
+.userSlot {
+    margin: 4px;
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 0.25rem;
+}
+
+.reticle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: red;
+    transform: translateX(-1px);
+    z-index: 10;
+}
+
+.spinButton {
+    background-color: #556FFF;
+}
+
+.spinButton:hover {
+    border: solid 1px #333333;
+}
+
+.spinButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.teams {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+.teamBase {
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    text-align: left;
+    border-radius: 0.5rem;
+    border: solid 2px;
+}
+
+.teamA {
+    background: linear-gradient(90deg, rgba(253, 172, 26, 0.4) 0%, rgba(51, 51, 51, 0.4) 100%);
+    border-color: #FDAC1A;
+}
+
+.teamB {
+    background: linear-gradient(90deg, rgba(85, 111, 255, 0.4) 0%, rgba(51, 51, 51, 0.4) 100%);
+    border-color: #556FFF;
+}
+
+.teamTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.userSmallAvatar {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+}
+
+.assignment {
+    margin: 1rem;
+    font-size: 0.875rem;
+}

@@ -1,0 +1,85 @@
+.importContainer {
+    min-width: 25vw;
+}
+
+.dropZone {
+    border: 1px dashed #aaa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.usersContainer {
+    min-height: 20vh;
+    overflow-y: auto;
+    max-height: 50vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.usersCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.25s;
+}
+
+.usersCard button {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.usersCard:hover button {
+    opacity: 1;
+}
+
+.usersCard:hover {
+    background-color: #404040;
+}
+
+.users {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.steamIcon {
+    width: 32px;
+    height: 32px;
+    background-image: url('../../assets/steam.svg');
+    background-size: cover;
+    display: inline-block;
+}
+
+.userButtons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.iconButton {
+    outline: none !important;
+    border-radius: 1.5rem;
+    width: 36px;
+    height: 36px;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.icon {
+    width: 36px;
+    height: 36px;
+}
