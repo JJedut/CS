@@ -5,7 +5,11 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #1a1a1a;
+  background: radial-gradient(
+          circle at center bottom,
+          #181B47, #1a1a1a
+  );
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -20,6 +24,11 @@ a {
 }
 a:hover {
   color: #535bf2;
+}
+
+.error-container {
+  margin-top: 1rem;
+  color: #ef233c;
 }
 
 html, body {

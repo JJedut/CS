@@ -1,9 +1,6 @@
 .container {
     text-align: center;
     padding: 1rem;
-    background-color: #333333;
-    border: 2px solid #404040;
-    border-radius: 0.5rem;
 }
 
 .title {
@@ -25,7 +22,7 @@
     overflow: hidden;
     border-radius: 0.5rem;
     border: 2px solid #404040;
-    background-color: #242424;
+    background-color: #1a1a1a;
 }
 
 .reel {

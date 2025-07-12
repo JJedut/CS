@@ -186,9 +186,6 @@ const SteamUserList: React.FC<AddSteamUserProps> = ({ onSelectionChange }) => {
                     </button>
                 </div>
 
-
-                {error && <p style={{color: 'red'}}>{error}</p>}
-
                 <div className={styles.list}>
                     {users.map((user, index) => {
                         const isSelected = selectedIds.includes(user.steamid);
@@ -200,7 +197,7 @@ const SteamUserList: React.FC<AddSteamUserProps> = ({ onSelectionChange }) => {
                             >
                                 <div
                                     onClick={(e) => toggleSelect(user.steamid, index, e)}
-                                    style={{display: 'flex', gap: '0.5rem', padding: '0.5rem'}}>
+                                    style={{display: 'flex', gap: '0.5rem', padding: '0.5rem', width: "100%"}}>
                                     <img
                                         src={user.avatar}
                                         alt={user.nickname}
@@ -247,7 +244,6 @@ const SteamUserList: React.FC<AddSteamUserProps> = ({ onSelectionChange }) => {
                 <ImportJSON
                     users={users}
                     setUsers={setUsers}
-                    setError={setError}
                     onClose={() => setShowPopup(false)}
                 />
             </Popup>
@@ -270,6 +266,11 @@ const SteamUserList: React.FC<AddSteamUserProps> = ({ onSelectionChange }) => {
                         }}
                     />
                 </div>
+                {error && (
+                    <div className="error-container">
+                        {error}
+                    </div>
+                )}
                 {isLoading && (
                     <div className={styles.loader}>
                         <div className={styles.waveLoader}/>

@@ -7,17 +7,16 @@ interface ImportJSONProps {
     users: SteamUser[];
     setUsers: React.Dispatch<React.SetStateAction<SteamUser[]>>;
     onClose: () => void;
-    setError: (err: string | null) => void;
 }
 
 const ImportJSON: React.FC<ImportJSONProps> = ({
                                                  users,
                                                  setUsers,
                                                  onClose,
-                                                 setError,
                                              }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [previewUsers, setPreviewUsers] = useState<SteamUser[]>([]);
+    const [error, setError] = useState<string | null>(null);
     const [isDragging, setIsDragging] = useState(false);
 
     const handleFile = (file: File) => {
@@ -89,7 +88,7 @@ const ImportJSON: React.FC<ImportJSONProps> = ({
                     onDrop={handleDrop}
                     className={styles.dropZone}
                     style={{
-                        background: isDragging ? '#404040' : '#333333'
+                        background: isDragging ? 'rgba(50,50,50,0.85)' : 'rgba(40,40,40,0.65)'
                     }}
                 >
                     <h3>Import Steam Users</h3>
@@ -145,6 +144,12 @@ const ImportJSON: React.FC<ImportJSONProps> = ({
                             Import
                         </button>
                     </div>
+                </div>
+            )}
+
+            {error && (
+                <div className="error-container">
+                    {error}
                 </div>
             )}
         </div>

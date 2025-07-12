@@ -1,0 +1,35 @@
+.switchContainer {
+    display: flex;
+    gap: 0.25rem;
+    width: fit-content;
+    padding: 0.25rem;
+    border: 2px solid #404040;
+    border-radius: 0.5rem;
+    background-color: #1a1a1a;
+}
+
+button {
+    padding: 8px 16px;
+    cursor: pointer;
+    outline: none !important;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.selected {
+    background-color: #556FFF;
+    color: white;
+    border: 2px solid #556FFF;
+}
+
+.unselected {
+    background-color: transparent;
+    border: 2px solid #404040;
+    color: #848484;
+}
+
+.unselected:hover {
+    background-color: transparent;
+    border: 2px solid #556FFF;
+    color: #556FFF;
+}

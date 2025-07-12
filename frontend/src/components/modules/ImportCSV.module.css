@@ -5,7 +5,7 @@
 .dropZone {
     border: 1px dashed #aaa;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     text-align: center;
     transition: background 0.3s;
 }

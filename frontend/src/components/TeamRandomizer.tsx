@@ -76,6 +76,7 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
         }
 
         const audio = new Audio("../../public/sounds/audiomass-output2.wav");
+        const endAudio = new Audio("../../public/sounds/gun-hammer-click.wav");
 
         const TICK_INTERVAL_START = 10; // ms between ticks at the beginning
         const TICK_INTERVAL_END = 180;  // ms between ticks at the end
@@ -116,6 +117,7 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
             }
 
             setSpinning(false);
+            endAudio.play()
         }, 5100);
     };
 
