@@ -6,19 +6,29 @@ type Props = {
     users: SteamUser[];
 };
 
+type PropsTeamX = {
+    team: SteamUser[],
+    teamName: string,
+    teamColor: string,
+    userCount: number
+};
+
+type PropsPlaceholderUsers = {
+    users: number
+};
+
 const TeamRandomizer: React.FC<Props> = ({ users }) => {
     const [teamA, setTeamA] = useState<SteamUser[]>([]);
     const [teamB, setTeamB] = useState<SteamUser[]>([]);
     const [remainingUsers, setRemainingUsers] = useState<SteamUser[]>([]);
     const [lastAssigned, setLastAssigned] = useState<SteamUser | null>(null);
     const [spinning, setSpinning] = useState(false);
-    const [currentOffset, setCurrentOffset] = useState(0);
     const [locked, setLocked] = useState<boolean>(false);
 
     const reelRef = useRef<HTMLDivElement>(null);
     const reelWindowRef = useRef<HTMLDivElement>(null);
 
-    const ITEM_WIDTH = 64 + 8; // avatar + margin
+    const ITEM_WIDTH = 128 + 8; // avatar + margin
 
     // Sync remaining users on load
     useEffect(() => {
@@ -26,7 +36,6 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
         setTeamB([]);
         setRemainingUsers(users);
         setLastAssigned(null);
-        setCurrentOffset(0);
 
         if (reelRef.current) {
             reelRef.current.style.transition = 'none';
@@ -75,8 +84,8 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
             });
         }
 
-        const audio = new Audio("../../public/sounds/audiomass-output2.wav");
-        const endAudio = new Audio("../../public/sounds/gun-hammer-click.wav");
+        const audio = new Audio("../../sounds/audiomass-output2.wav");
+        const endAudio = new Audio("../../sounds/gun-hammer-click.wav");
 
         const TICK_INTERVAL_START = 10; // ms between ticks at the beginning
         const TICK_INTERVAL_END = 180;  // ms between ticks at the end
@@ -101,7 +110,6 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
             const nextRemaining = updatedRemaining.filter(u => u.steamid !== selectedUser.steamid);
 
             setLastAssigned(selectedUser);
-            setCurrentOffset(newOffset);
 
             if (nextRemaining.length === 1) {
                 const lastUser = nextRemaining[0];
@@ -117,6 +125,7 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
             }
 
             setSpinning(false);
+            endAudio.volume = 0.1;
             endAudio.play()
         }, 5100);
     };
@@ -134,7 +143,6 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
         setTeamB([]);
         setRemainingUsers(users);
         setLastAssigned(null);
-        setCurrentOffset(0);
         setLocked(false);
         if (reelRef.current) {
             reelRef.current.style.transition = "none";
@@ -143,6 +151,45 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
     };
 
     const allAssigned = users.length > 0 && teamA.length > 0 || teamB.length > 0;
+
+    const teamACount = Math.ceil(users.length / 2) - teamA.length;
+    const teamBCount = Math.floor(users.length / 2) - teamB.length;
+
+    function PlaceholderUsers({users}: PropsPlaceholderUsers) {
+        return (
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                {[...Array(users)].map(() => (
+                    <div className={styles.user}>
+                        <div className={styles.placeholderAvatar}> ? </div>
+                        <strong>Player</strong>
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+    function TeamX({team, teamName, teamColor, userCount}: PropsTeamX) {
+        return (
+            <>
+                {users.length > 1 && (
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <h2 className={styles.teamTitle}>{teamName}</h2>
+                        <div className={`${styles.teamBase} ${styles.teamA} ${styles[teamColor]}`}>
+                            {team.map((user: SteamUser) => (
+                                <div key={user.steamid} className={styles.user}>
+                                    <img src={user.avatar} className={styles.smallAvatar}/>
+                                    <strong>{user.nickname}</strong>
+                                </div>
+                            ))}
+                            <PlaceholderUsers
+                                users={userCount}>
+                            </PlaceholderUsers>
+                        </div>
+                    </div>
+                )}
+            </>
+        )
+    }
 
     return (
         <div className={styles.container}>
@@ -170,7 +217,7 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
                     <button
                         className={styles.spinButton}
                         onClick={handleSpin}
-                        disabled={spinning || locked}
+                        disabled={spinning || locked || users.length < 2}
                     >
                         {spinning ? "..." : "Draw Next Player"}
                     </button>
@@ -184,42 +231,34 @@ const TeamRandomizer: React.FC<Props> = ({ users }) => {
             )}
 
             <div className={styles.teams}>
-                {teamA.length > 0 && (
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
-                        <h2 className={styles.teamTitle}>Team A</h2>
-                        <div className={`${styles.teamBase} ${styles.teamA}`}>
-                            {teamA.map((user) => (
-                                <div key={user.steamid} className={styles.user}>
-                                    <img src={user.avatar} className={styles.avatar}/>
-                                    <strong>{user.nickname}</strong>
-                                </div>
-                            ))}
-                        </div>
+                <TeamX
+                    team={teamA}
+                    teamName={"Team A"}
+                    teamColor={"teamA"}
+                    userCount={teamACount}>
+                </TeamX>
+                {users.length > 1 && (
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            fontStyle: 'italic'
+                    }}>
+                        <h1>VS</h1>
                     </div>
                 )}
-                {teamB.length > 0 && (
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
-                        <h2 className={styles.teamTitle}>Team B</h2>
-                        <div className={`${styles.teamBase} ${styles.teamB}`}>
-                            {teamB.map((user) => (
-                                <div key={user.steamid} className={styles.user}>
-                                    <img src={user.avatar} className={styles.avatar}/>
-                                    <strong>{user.nickname}</strong>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
+                <TeamX
+                    team={teamB}
+                    teamName={"Team B"}
+                    teamColor={"teamB"}
+                    userCount={teamBCount}>
+                </TeamX>
             </div>
 
-            {lastAssigned && (
-                <div className={styles.assignment}>
-                    <strong>{lastAssigned.nickname}</strong> was assigned to{" "}
-                    {teamA.includes(lastAssigned) ? "Team A" : "Team B"}!
-                </div>
-            )}
             {allAssigned && (
                 <button
+                    style={{ margin: "1rem" }}
                     onClick={handleReset}
                 >
                     Reset Teams

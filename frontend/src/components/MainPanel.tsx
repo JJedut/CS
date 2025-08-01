@@ -29,40 +29,37 @@ const MainPanel: React.FC = () => {
 
                     <div style={{ position: "relative" }}>
                         <AnimatePresence mode="wait">
-                            <motion.div
-                                animate={{
-                                    opacity: selectedSide ? 1 : 0,
-                                    y: selectedSide ? 0 : -10,
-                                    filter: selectedSide ? "blur(0px)" : "blur(10px)"
-                                }}
-                                transition={{ duration: 0.2 }}
-                                style={{
-                                    display: selectedSide ? "block" : "none", // Optional: prevents interaction
-                                    position: "absolute",
-                                    width: "100%",
-                                }}
-                            >
-                                <TeamRandomizer users={selectedUsers} />
-                            </motion.div>
-
-                            <motion.div
-                                animate={{
-                                    opacity: !selectedSide ? 1 : 0,
-                                    y: !selectedSide ? 0 : -10,
-                                    filter: !selectedSide ? "blur(0px)" : "blur(10px)"
-                                }}
-                                transition={{ duration: 0.2 }}
-                                style={{
-                                    display: !selectedSide ? "block" : "none",
-                                    position: "absolute",
-                                    width: "100%",
-                                }}
-                            >
-                                <MapRandomizer />
-                            </motion.div>
+                            {selectedSide ? (
+                                <motion.div
+                                    key="team-randomizer"
+                                    animate={{
+                                        opacity: 1,
+                                        y: 0,
+                                        filter: "blur(0px)",
+                                    }}
+                                    exit={{ opacity: 0, y: -10, filter: "blur(10px)" }}
+                                    transition={{ duration: 0.2 }}
+                                    style={{ position: "absolute", width: "100%" }}
+                                >
+                                    <TeamRandomizer users={selectedUsers} />
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    key="map-randomizer"
+                                    animate={{
+                                        opacity: 1,
+                                        y: 0,
+                                        filter: "blur(0px)",
+                                    }}
+                                    exit={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+                                    transition={{ duration: 0.2 }}
+                                    style={{ position: "absolute", width: "100%" }}
+                                >
+                                    <MapRandomizer />
+                                </motion.div>
+                            )}
                         </AnimatePresence>
                     </div>
-
                 </div>
             </div>
         </div>

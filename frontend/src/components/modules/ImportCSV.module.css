@@ -46,6 +46,11 @@
     align-items: center;
     flex-direction: column;
     gap: 0.5rem;
+    transition: transform 0.25s ease;
+}
+
+.users:hover {
+    transform: scale(1.05);
 }
 
 .steamIcon {
